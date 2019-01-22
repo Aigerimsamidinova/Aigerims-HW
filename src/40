@@ -1,0 +1,117 @@
+1.Как вы понимаете Git?
+гит нам нужен для удаленной работы, что бы могли работать несколько человек над одним проектом, и в конце можно объеденить все ветки в одну (если надо)
+2.Для чего нам нужны Базы Данных?
+для хранения талиц, данных
+3.Что делает команда ‘commit’?
+сохраняет все изменения в лок репозит.
+4.Что делает команда ‘pull?
+сохраняет все изменения с удаленного реп-я в локальную
+5.Что делает команда ‘push?
+отправляет все изменения с локального в удаленный
+6.Что такое первичный ключ (Primary Key)?
+первичный ключ, с помощью которого можно достучаться до нужного элемента. которое хранится под этим ключом.  ()
+7.Что такое внешний ключ (Foreign Key)?
+это как ссылочный ключ для другой таблицы, нажав на это (ссылку) можем перейти на другую таблицу
+8.Чем отличаются колонки от строк?
+колонки- это как бы название таблиц (фамилия, имя, год рожд, адресс), а строки- данные уже под этими колонками
+9.Чем отличаются таблицы от базы данных?
+Бд - это набор таблиц. которые связаны между собой
+10.Что такое CRUD операции?
+сreate, read, update, delete
+
+
+create table sport_types(
+sport_id integer primary key,
+sport_type varchar (50) unique not null,
+s_salary integer )
+
+
+create table trainers(
+trainer_id integer primary key,
+full_name  varchar (50) unique not null,
+sport_id integer not null  references sport_types(sport_id),
+phone_number varchar (50) not null,
+inn varchar (14) unique not null
+)
+
+insert into sport_types(sport_id, sport_type, s_salary )
+values (1, 'football', 400);
+insert into sport_types(sport_id, sport_type, s_salary )
+values (2, 'golf', 100);
+insert into sport_types(sport_id, sport_type, s_salary )
+values (3, 'basketball', 2000);
+insert into sport_types(sport_id, sport_type, s_salary )
+values (4, 'tennis', 800);
+insert into sport_types(sport_id, sport_type, s_salary )
+values (5, 'swim', 2000);
+
+insert into trainers ( trainer_id, full_name, sport_id, phone_number, inn)
+values (1, 'football trainer Alex',1,'0709009988', '12345678901234');
+insert into trainers ( trainer_id, full_name, sport_id, phone_number, inn)
+values (2, 'golf  trainer Max',2,'0700009988', '11234234ghoidr');
+insert into trainers ( trainer_id, full_name, sport_id, phone_number, inn)
+values (3, 'backetball trainer Rtm',3,'0555009988', '098766543asdfg');
+insert into trainers ( trainer_id, full_name, sport_id, phone_number, inn)
+values (4, 'tennis trainer ASD',4,'0700009988', '123erty6578903');
+insert into trainers ( trainer_id, full_name, sport_id, phone_number, inn)
+values (5, 'swiming trainer Jeck',4,'070009988', '123erty657803');
+
+
+select t.*, s.sport_type, s.s_salary
+from
+trainers t join sport_types s on t.sport_id= s.sport_id
+
+
+create table  visitor (
+visitor_id integer primary key not null,
+visitor_name varchar(50) unique not null,
+v_bd date not null,
+visitor_sex varchar (10) not null,
+sport_id integer not null  references sport_types(sport_id))
+
+
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex, sport_id)
+values (1, '  Samidinova Aigerim', '1998-12-15', 'f',5);
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex,sport_id)
+values (2, '  Asanov Bakyt', '1998-11-28', 'm',3);
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex,sport_id)
+values (3, 'Aliev Samat', '1995-12-12', 'm',4);
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex,sport_id)
+values (4, ' Albaeva Elvira', '1992-02-23', 'f',1);
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex,sport_id)
+values (5, ' Usenov Beka', '1990-10-10', 'm',5);
+insert into visitor (visitor_id, visitor_name, v_bd, visitor_sex,sport_id)
+values (6, ' Akimova Aidana', '1994-04-16', 'f',5);
+
+create table visiting(
+visitor_id integer not null references visitor (visitor_id),
+time_to_visit varchar(10) not null)
+
+create table visiting(
+id integer primary key,
+visitor integer not null references visitor(visitor_id),
+visit_time varchar(10),
+trainer_id integer not null references trainers(trainer_id)
+)
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(1, 2, '14:00', 1);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(2, 1, '12:00', 3);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(3, 3, '16:00', 3);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(4, 3, '15:00', 3);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(5, 6, '19:00', 5);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(6, 4, '12:00', 5);
+insert into visiting(id, visitor, visit_time, trainer_id)
+values(7, 5, '13:00', 5);
+
+select* from visiting
+
+select * from visiting  // desc
+where trainer_id=5
+order by visit_time desc
+
+
