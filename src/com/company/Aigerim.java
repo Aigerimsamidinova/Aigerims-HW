@@ -19,7 +19,6 @@ public class Aigerim {
     }
 
 
-
     public int getTrainersInfo() {
         String SQL = "select t.full_name from trainers  t";
         String count = "";
@@ -28,6 +27,28 @@ public class Aigerim {
              ResultSet rs = stmt.executeQuery(SQL)) {
             while (rs.next()) {
                 count = (rs.getString("full_name"));
+                if (count.contains(" ")) {
+                    count = count.substring(0, count.indexOf(" "));
+                    if (count.length() > 3) {
+                        System.out.println(rs.getString("full_name") + " " + " Молодец!");
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return 0;
+    }
+
+    public int get() {
+        String SQL = "insert into groupp (gr_id, gr_name) values (?,?)";
+        String count = "";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(SQL);
+             ResultSet rs = stmt.executeQuery(SQL)) {
+            stmt.setInt(1, 5);
+            stmt.setString(1, "Values");
+            while (rs.next()) {
                 if (count.contains(" ")) {
                     count = count.substring(0, count.indexOf(" "));
                     if (count.length() > 3) {
